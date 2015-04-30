@@ -7,16 +7,29 @@
 //
 
 #import "AppDelegate.h"
+#import "CCTabbarView.h"
+#import "PublishView.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UITabBarControllerDelegate,
+CCTabbarViewDelegate> {
+    CCTabbarView *_tabbar;
+}
 
 @end
+
+#define SCREEN_WIDTH        [[UIScreen mainScreen] bounds].size.width    //当前设备的屏幕宽度
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    _tabbar = [[CCTabbarView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 49)];
+    _tabbar.delegate = self;
+    _tabbar.titleArray = @[@"段子",@"发现",@"",@"聊天",@"我的"];
+    [[UITabBar appearance] addSubview:_tabbar];
+
     return YES;
 }
 
@@ -40,6 +53,18 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - CCTabbarDelegate
+- (void)selectedImageIndex:(NSInteger)index {
+    if (index == 2) {
+        NSLog(@"选择的是第二个选项卡 需要弹出咯");
+        PublishView *publish = [[PublishView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        publish.publishBlock = ^() {
+            _tabbar.selectedIndex = 2;
+        };
+        [publish show];
+    }
 }
 
 @end

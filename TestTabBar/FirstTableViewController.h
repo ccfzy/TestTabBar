@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  FirstTableViewController.h
 //  TestTabBar
 //
 //  Created by caochuang on 15/4/1.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
-
+@interface FirstTableViewController : UITableViewController
 
 @end
-
